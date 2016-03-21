@@ -1,0 +1,69 @@
+﻿<Page
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:To_Do_List_2"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:WinRTDatePicker="using:WinRTDatePicker"
+    x:Class="To_Do_List_2.AddEvent"
+    mc:Ignorable="d">
+
+    <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150*" />
+            <ColumnDefinition Width="1000"/>
+            <ColumnDefinition Width="150*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock TextWrapping="Wrap" Text="To-Do list" HorizontalAlignment="Center" Width="135" Height="35" Margin="0,38,0,0" FontSize="30" VerticalAlignment="Top" Grid.Column="1"/>
+            
+        <!-- Back button -->
+        <Image HorizontalAlignment="Left" Height="50" Margin="50,30,0,0" VerticalAlignment="Top" Width="50" Source="Images/back.png" PointerPressed="Image_PointerPressed_1"/>
+
+        <!-- Event name -->
+            <TextBox x:Name="EventNameTextBox" HorizontalAlignment="Left" Margin="99,131,0,0" TextWrapping="Wrap" Text="Name of task" VerticalAlignment="Top" Width="320" Height="40" FontSize="20" Grid.Column="1" />
+            <TextBlock HorizontalAlignment="Left" Margin="26,140,0,0" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top" FontSize="20" Grid.Column="1"/>
+
+            <!-- Event Description -->
+            <TextBlock HorizontalAlignment="Left" Margin="35,205,0,0" TextWrapping="Wrap" Text="Note" VerticalAlignment="Top" FontSize="20" Grid.Column="1"/>
+            <TextBox x:Name="EventDescriptionTextBox" HorizontalAlignment="Left" Margin="99,197,0,0" TextWrapping="Wrap" Text="Description of task" VerticalAlignment="Top" Width="320" Height="110" FontSize="20" Grid.Column="1"/>
+
+            <!-- Event Priority -->
+            <TextBlock HorizontalAlignment="Left" Margin="16,340,0,0" TextWrapping="Wrap" Text="Priority" VerticalAlignment="Top" FontSize="20" Grid.Column="1"/>
+        <ComboBox x:Name="EventPriorityComboBox" HorizontalAlignment="Left" Margin="99,333,0,0" VerticalAlignment="Top" Width="320" Height="40" SelectedIndex="0" FontSize="20" Grid.Column="1">
+            <ComboBoxItem Content="High" />
+            <ComboBoxItem Content="Medium" />
+            <ComboBoxItem Content="Low" /> 
+        </ComboBox>
+
+        <!-- Event Status -->
+            <TextBlock HorizontalAlignment="Left" Margin="584,140,0,0" TextWrapping="Wrap" Text="Status" VerticalAlignment="Top" FontSize="20" Grid.Column="1" />
+        <ComboBox x:Name="EventStatusComboBox" HorizontalAlignment="Left" Margin="657,131,0,0" VerticalAlignment="Top" Width="320" Height="40" SelectedIndex="0" FontSize="20" Grid.Column="1">
+            <ComboBoxItem Content="Active" />
+            <ComboBoxItem Content="Next" />
+            <ComboBoxItem Content="Canceled" />
+            <ComboBoxItem Content="Done" />
+        </ComboBox>
+
+        <!-- Event Length -->
+            <TextBlock HorizontalAlignment="Left" Margin="577,205,0,0" TextWrapping="Wrap" Text="Length" VerticalAlignment="Top" RenderTransformOrigin="4.178,-9.154" FontSize="20" Grid.Column="1"/>
+            <TextBox x:Name="EventEstimatedLengthComboBox" HorizontalAlignment="Left" Margin="657,197,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="320" Height="40" FontSize="20" KeyUp="EventEstimatedLengthComboBox_KeyUp" Grid.Column="1"/>
+
+        <!-- Event Start Date -->
+            <TextBlock HorizontalAlignment="Left" Margin="550,277,0,0" TextWrapping="Wrap" Text="Start Date" VerticalAlignment="Top" FontSize="20" Grid.Column="1"/>
+            <WinRTDatePicker:DatePicker x:Name="StartDatePicker" Width="320" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="656,267,0,0" Grid.Column="1" />
+
+        <!-- Event End Date -->
+        <TextBlock HorizontalAlignment="Left" Margin="560,342,0,0" TextWrapping="Wrap" Text="Deadline" VerticalAlignment="Top" FontSize="20" Grid.Column="1"/>
+        <WinRTDatePicker:DatePicker x:Name="EndDatePicker" Width="320" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="656,333,0,0" Grid.Column="1" />
+
+        <!-- Save Button -->
+        <Button Content="Save" HorizontalAlignment="Center" Margin="0,440,0,0" VerticalAlignment="Top" Click="Button_Click_1" FontSize="20" Height="86" Width="166" Grid.Column="1"/>
+
+        <!-- Error message -->
+        <TextBlock Margin="0,580,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" TextWrapping="Wrap"
+                   Text="Please use valid format for length: 1h2m3s, 180mins, 10 days 20 hours 30 minutes 40 seconds, 99 d 23 h 59 m 59 s, 23hrs59mins59secs, 24 hours, 60 min" 
+                   FontSize="20" Height="100" Width="370" TextAlignment="Center"  x:Name="ErrorTextBlock" Visibility="Collapsed" Foreground="Red" Grid.Column="1"/>
+
+    </Grid>
+</Page>

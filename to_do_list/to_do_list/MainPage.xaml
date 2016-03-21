@@ -1,0 +1,144 @@
+﻿<Page
+    x:Class="To_Do_List_2.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:To_Do_List_2"
+    xmlns:WinRTDatePicker="using:WinRTDatePicker"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <local:DateTimeConverter x:Key="dateTimeConverter" />
+
+        <Style x:Key="DatePickerStyle1"
+               TargetType="WinRTDatePicker:DatePicker">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="WinRTDatePicker:DatePicker">
+                        <StackPanel Background="{TemplateBinding Background}" Width="320" >
+                            <ComboBox x:Name="_DayOptions"
+                                      VerticalAlignment="Top"
+                                      Background="#CCFF0000" Visibility="Collapsed"/>
+                            <ComboBox x:Name="_MonthOptions"
+                                      VerticalAlignment="Top" Height="40"/>
+                            <ComboBox x:Name="_YearOptions"
+                                      VerticalAlignment="Top"
+                                      Background="#CC0023FF" Visibility="Collapsed"/>
+                        </StackPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="DatePickerStyle2"
+               TargetType="WinRTDatePicker:DatePicker">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="WinRTDatePicker:DatePicker">
+                        <StackPanel Background="{TemplateBinding Background}" Orientation="Horizontal">
+                            <ComboBox x:Name="_DayOptions"
+                                      VerticalAlignment="Top" Width="200" Height="40"/>
+                            <ComboBox x:Name="_MonthOptions"
+                                      VerticalAlignment="Top" Width="115" Margin="5,0,0,0" Height="40"/>
+                            <ComboBox x:Name="_YearOptions"
+                                      VerticalAlignment="Top" 
+                                      Background="#CC0023FF" Visibility="Collapsed"/>
+                        </StackPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Page.Resources>
+
+    <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+
+        <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="200*"/>
+                <RowDefinition Height="300"/>
+            </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="500*" />
+            <ColumnDefinition Width="500"/>
+            <ColumnDefinition Width="500"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" x:Name="ListViewHeaders" Margin="0,100,0,0" Grid.ColumnSpan="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="110"/>
+                    <ColumnDefinition Width="110"/>
+                    <ColumnDefinition Width="180"/>
+                    <ColumnDefinition Width="140"/>
+                    <ColumnDefinition Width="140"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="orderName" Grid.Column="0" Text="Name" HorizontalAlignment="Center" VerticalAlignment="Center"  Height="30" PointerPressed="orderName_PointerPressed" FontSize="20" Padding="0,0,0,0"/>
+                <TextBlock x:Name="orderDescription" Grid.Column="1" Text="Note" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" PointerPressed="orderDescription_PointerPressed" FontSize="20"/>
+                <TextBlock x:Name="orderStatus" Grid.Column="2" Text="Priority" HorizontalAlignment="Right" Padding="0,0,20,0" VerticalAlignment="Center" Height="30" FontSize="20" PointerPressed="orderPriority_PointerPressed"/>
+                <TextBlock x:Name="orderPriority" Grid.Column="3" Text="Status" HorizontalAlignment="Right" Padding="0,0,25,0" VerticalAlignment="Center" Height="30" FontSize="20" PointerPressed="orderStatus_PointerPressed"/>
+                <TextBlock x:Name="orderEstimatedLength" Grid.Column="4" Text="Length" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" PointerPressed="orderEstimatedLength_PointerPressed" FontSize="20"/>
+                <TextBlock x:Name="orderStartDate" Grid.Column="5" Text="Start date" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" PointerPressed="orderStartDate_PointerPressed" FontSize="20"/>
+            <TextBlock x:Name="orderEndDate" Grid.Column="6" Text="Deadline" HorizontalAlignment="Left" Padding="10,0,0,0" VerticalAlignment="Center" Height="30" PointerPressed="orderEndDate_PointerPressed" FontSize="20"/>
+            </Grid>
+
+            <ListView Grid.Row="1" x:Name="eventsTable"
+                  ItemsSource="{Binding Events}" 
+                  SelectedItem="{Binding SelectedEvent}" 
+                  SelectionChanged="eventsTable_SelectionChanged" 
+                  DoubleTapped="eventsTable_DoubleTapped" Grid.ColumnSpan="3" Tapped="eventsTable_Tapped">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid x:Name="Data">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="110"/>
+                            <ColumnDefinition Width="110"/>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="140"/>
+                            <ColumnDefinition Width="140"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{Binding Name}" HorizontalAlignment="Left" Padding="10,10,0,0"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Description}" HorizontalAlignment="Left" Padding="0,10,0,0"/>
+                        <TextBlock Grid.Column="2" Text="{Binding Priority}" HorizontalAlignment="Center" Padding="0,10,0,0"/>
+                        <TextBlock Grid.Column="3" Text="{Binding Status}" HorizontalAlignment="Center" Padding="0,10,0,0"/>
+                        <TextBlock Grid.Column="4" Text="{Binding EstimatedLength}" HorizontalAlignment="Center" Padding="0,10,0,0"/>
+                        <TextBlock Grid.Column="5" Text="{Binding StartDate, Converter={StaticResource dateTimeConverter}}" HorizontalAlignment="Center" Padding="0,10,0,0"/>
+                        <TextBlock Grid.Column="6" Text="{Binding EndDate, Converter={StaticResource dateTimeConverter}}" HorizontalAlignment="Left" Padding="15,10,0,0"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <TextBlock TextWrapping="Wrap" Text="To-Do List" HorizontalAlignment="Center" Height="30" Margin="0,0,0,30" FontSize="30" Grid.ColumnSpan="3"/>
+
+        <!-- Search -->
+        <TextBlock HorizontalAlignment="Left" Margin="37,41,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Search" VerticalAlignment="Top" FontSize="20" Grid.Column="1"/>
+        <TextBox x:Name="searchTextBox" HorizontalAlignment="Left" Margin="115,33,0,0" Grid.Row="2" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="320" Height="40" KeyUp="searchTextBox_KeyUp" FontSize="20" Grid.Column="1"/>
+
+        <!-- Filter in Day -->
+        <TextBlock HorizontalAlignment="Left" Margin="62,101,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Day" VerticalAlignment="Top" FontSize="20" Grid.Column="1"/>
+        <WinRTDatePicker:DatePicker x:Name="filterInDay" Margin="115,93,0,167" Grid.Row="2" Width="320" HorizontalAlignment="Left" Height="40" Grid.Column="1" />
+
+        <!-- Filter in Week -->
+        <TextBlock HorizontalAlignment="Left" Margin="47,161,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Week" VerticalAlignment="Top" FontSize="20" Grid.Column="1"/>
+        <WinRTDatePicker:DatePicker x:Name="filterInWeek" Width="320" Grid.Row="2" HorizontalAlignment="Left" Style="{StaticResource DatePickerStyle2}" Margin="115,153,0,107" Grid.Column="1"/>
+
+        <!-- Filter in Month -->
+        <TextBlock HorizontalAlignment="Left" Margin="37,222,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Month" VerticalAlignment="Top" FontSize="20" Grid.Column="1"/>
+        <WinRTDatePicker:DatePicker x:Name="filterInMonth"  Width="320" Height="40" HorizontalAlignment="Left" Margin="115,213,0,47" Grid.Row="2" Style="{StaticResource DatePickerStyle1}" Grid.Column="1" />
+
+        <!-- Buttons -->
+        <Button Content="Add" x:Name="createButton" HorizontalAlignment="Left" Margin="39,28,0,0" Grid.Row="2" VerticalAlignment="Top" Click="createButton_Click" Height="60" Width="180" FontSize="20" Grid.Column="2"/>
+        <Button Content="Delete" HorizontalAlignment="Left" Margin="39,111,0,0" Grid.Row="2" VerticalAlignment="Top" Click="Button_Click_1" Height="60" Width="180" FontSize="20" Grid.Column="2"/>
+        <Button Content="Show All Events" HorizontalAlignment="Left" Margin="39,193,0,0" Grid.Row="2" VerticalAlignment="Top" Click="Show_All_Click" Height="60" Width="180" FontSize="20" Grid.Column="2"/>
+
+        <!-- Description Text Block -->
+        <TextBlock HorizontalAlignment="Left" Margin="40,39,40,60" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" MinHeight="200" MinWidth="200" FontSize="20" Width="239" TextTrimming="WordEllipsis" >
+                <Run Text="{Binding ElementName=eventsTable, Path=SelectedItem.Description}" />
+        </TextBlock>
+        
+    </Grid>
+</Page>
