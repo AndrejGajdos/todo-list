@@ -1,6 +1,6 @@
 # Todo list
 
-Todo list application in C#.
+Todo list application in C# – experiment.
 
 ## License
 
